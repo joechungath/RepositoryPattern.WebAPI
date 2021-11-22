@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore
 {
-    public  class AppContext:DbContext
+    public  class ApplicationContext:DbContext
     {
-        public AppContext(DbContextOptions<AppContext> options):base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options):base(options)
         {
 
         }

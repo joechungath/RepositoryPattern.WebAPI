@@ -1,7 +1,11 @@
+using DataAccess.EFCore;
+using Domain;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +31,11 @@ namespace WebAPI
         {
 
             services.AddControllers();
+            services.AddDbContext<ApplicationContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IDeveloperRepository, DeveloperRepository>();
+            services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<IUnitofWork, UnitofWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
